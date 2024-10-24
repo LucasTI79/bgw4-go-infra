@@ -1,0 +1,16 @@
+FROM golang:1.22
+
+# Install Air
+RUN go install github.com/air-verse/air@v1.52.3
+
+WORKDIR /go/src/app
+
+COPY go.mod ./
+
+RUN go mod download
+
+COPY . .
+
+RUN go build -o ./tmp/main ./main.go
+
+CMD [ "air" ]
